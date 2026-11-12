@@ -3,12 +3,12 @@ import os
 os.environ["OLLAMA_HOST"] = "http://127.0.0.1:11434"
 
 from dotenv import load_dotenv
-from langchain_core.prompts import PromptTemplate
-from langchain_ollama import ChatOllama
-from langchain_openai import ChatOpenAI
 from langchain.chat_models import init_chat_model
 from langchain.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
+from langchain_core.prompts import PromptTemplate
+from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
 from langsmith import traceable
 
 load_dotenv()
@@ -75,7 +75,7 @@ def run_agent(question: str):
         HumanMessage(content=question),
     ]
 
-    # this is the ReAct loop for Reasoning and Reacting 
+    # this is the ReAct loop for Reasoning and Reacting
     for iteration in range(1, MAX_ITERATIONS + 1):
         print(f"\n--- Iteration {iteration} ---")
 
@@ -104,7 +104,7 @@ def run_agent(question: str):
 
         print(f"+++  observation (Tool Result) :  {observation} +++")
 
-        #  we append the observations ( the results ) to the messages so the llm can remember the past results and calls 
+        #  we append the observations ( the results ) to the messages so the llm can remember the past results and calls
         messages.append(ai_message)
         messages.append(
             ToolMessage(content=str(observation), tool_call_id=tool_call_id)
@@ -112,7 +112,6 @@ def run_agent(question: str):
 
     print(" *** ERROR: max iterations completed but there is no answer from the llm ")
     return None
-
 
 
 if __name__ == "__main__":
